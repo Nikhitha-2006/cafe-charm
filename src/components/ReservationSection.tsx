@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Send } from "lucide-react";
+import { Send, CheckCircle2, CalendarDays, Clock, Users, X } from "lucide-react";
 import { toast } from "sonner";
 
 const ReservationSection = () => {
   const [form, setForm] = useState({ name: "", email: "", phone: "", date: "", time: "", guests: "", message: "" });
+  const [confirmation, setConfirmation] = useState<null | { id: string; name: string; date: string; time: string; guests: string }>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -11,8 +12,38 @@ const ReservationSection = () => {
       toast.error("Please fill in your name and email.");
       return;
     }
-    toast.success("Reservation request sent! We'll confirm shortly.");
+    if (!form.date || !form.time || !form.guests) {
+      toast.error("Please select date, time and number of guests.");
+      return;
+    }
+
+    const bookingId = "FB-" + Date.now().toString(36).toUpperCase().slice(-6);
+    setConfirmation({
+      id: bookingId,
+      name: form.name,
+      date: form.date,
+      time: form.time,
+      guests: form.guests,
+    });
     setForm({ name: "", email: "", phone: "", date: "", time: "", guests: "", message: "" });
+  };
+
+  const formatDate = (dateStr: string) => {
+    try {
+      return new Date(dateStr).toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+    } catch {
+      return dateStr;
+    }
+  };
+
+  const formatTime = (timeStr: string) => {
+    try {
+      const [h, m] = timeStr.split(":");
+      const hour = parseInt(h);
+      return `${hour > 12 ? hour - 12 : hour}:${m} ${hour >= 12 ? "PM" : "AM"}`;
+    } catch {
+      return timeStr;
+    }
   };
 
   const inputClass =
@@ -60,7 +91,7 @@ const ReservationSection = () => {
               value={form.guests}
               onChange={(e) => setForm({ ...form, guests: e.target.value })}
             >
-              <option value="">Number of Guests</option>
+              <option value="">Number of Guests *</option>
               {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
                 <option key={n} value={n}>{n} {n === 1 ? "Guest" : "Guests"}</option>
               ))}
@@ -94,6 +125,67 @@ const ReservationSection = () => {
           </button>
         </form>
       </div>
+
+      {/* Confirmation Modal */}
+      {confirmation && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-fade-in">
+          <div className="bg-card rounded-2xl p-8 max-w-md w-full relative shadow-2xl animate-scale-in">
+            <button
+              onClick={() => setConfirmation(null)}
+              className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 rounded-full bg-accent flex items-center justify-center mx-auto mb-4">
+                <CheckCircle2 className="w-9 h-9 text-primary" />
+              </div>
+              <h3 className="font-heading text-2xl font-bold text-foreground">Table Reserved!</h3>
+              <p className="text-muted-foreground text-sm mt-1">Your booking has been confirmed</p>
+            </div>
+
+            <div className="bg-secondary/50 rounded-xl p-5 space-y-3 mb-6">
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-muted-foreground">Booking ID</span>
+                <span className="font-bold text-primary font-mono">{confirmation.id}</span>
+              </div>
+              <div className="border-t border-border" />
+              <div className="flex items-center gap-2 text-sm">
+                <Users className="w-4 h-4 text-primary" />
+                <span className="text-muted-foreground">Guest:</span>
+                <span className="font-semibold text-foreground ml-auto">{confirmation.name}</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm">
+                <CalendarDays className="w-4 h-4 text-primary" />
+                <span className="text-muted-foreground">Date:</span>
+                <span className="font-semibold text-foreground ml-auto">{formatDate(confirmation.date)}</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm">
+                <Clock className="w-4 h-4 text-primary" />
+                <span className="text-muted-foreground">Time:</span>
+                <span className="font-semibold text-foreground ml-auto">{formatTime(confirmation.time)}</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm">
+                <Users className="w-4 h-4 text-primary" />
+                <span className="text-muted-foreground">Guests:</span>
+                <span className="font-semibold text-foreground ml-auto">{confirmation.guests} {parseInt(confirmation.guests) === 1 ? "Guest" : "Guests"}</span>
+              </div>
+            </div>
+
+            <p className="text-xs text-center text-muted-foreground mb-4">
+              A confirmation has been sent to your email. Please save your Booking ID for reference.
+            </p>
+
+            <button
+              onClick={() => setConfirmation(null)}
+              className="w-full py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-all"
+            >
+              Done
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
