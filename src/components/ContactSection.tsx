@@ -1,8 +1,8 @@
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 
 const info = [
-  { icon: MapPin, label: "Address", value: "123 Maple Street, Downtown, CA 90210" },
-  { icon: Phone, label: "Phone", value: "(555) 234-5678" },
+  { icon: MapPin, label: "Address", value: "Tirupati, Andhra Pradesh, India" },
+  { icon: Phone, label: "Phone", value: "9346936016 · 9652048217" },
   { icon: Mail, label: "Email", value: "hello@freshbitecafe.com" },
   { icon: Clock, label: "Hours", value: "Mon–Fri 7am–8pm · Sat–Sun 8am–9pm" },
 ];
