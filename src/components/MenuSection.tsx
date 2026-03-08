@@ -67,6 +67,11 @@ import menuTruffleFries from "@/assets/menu-trufflefries.jpg";
 import menuAcaiBowl from "@/assets/menu-acaibowl.jpg";
 import menuBurger from "@/assets/menu-burger.jpg";
 import menuFrenchToast from "@/assets/menu-frenchtoast.jpg";
+import menuCholeBhature from "@/assets/menu-cholebhature.jpg";
+import menuPavBhaji from "@/assets/menu-pavbhaji.jpg";
+import menuMasalaDosa from "@/assets/menu-masaladosa.jpg";
+import menuRajKachori from "@/assets/menu-rajkachori.jpg";
+import menuPaneerTikka from "@/assets/menu-paneertikka.jpg";
 import menuMatchaLatte from "@/assets/menu-matchalatte.jpg";
 import menuBanoffeePie from "@/assets/menu-banoffeepie.jpg";
 type MenuItem = {
