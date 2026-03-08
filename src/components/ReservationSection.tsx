@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { Send, CheckCircle2, CalendarDays, Clock, Users, X } from "lucide-react";
+import { Send, CheckCircle2, CalendarDays, Clock, Users, X, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const ReservationSection = () => {
   const [form, setForm] = useState({ name: "", email: "", phone: "", date: "", time: "", guests: "", message: "" });
   const [confirmation, setConfirmation] = useState<null | { id: string; name: string; date: string; time: string; guests: string }>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name.trim() || !form.email.trim()) {
       toast.error("Please fill in your name and email.");
@@ -17,15 +19,61 @@ const ReservationSection = () => {
       return;
     }
 
+    setIsSubmitting(true);
     const bookingId = "FB-" + Date.now().toString(36).toUpperCase().slice(-6);
-    setConfirmation({
-      id: bookingId,
-      name: form.name,
-      date: form.date,
-      time: form.time,
-      guests: form.guests,
-    });
-    setForm({ name: "", email: "", phone: "", date: "", time: "", guests: "", message: "" });
+
+    try {
+      // Save to database
+      const { error: dbError } = await supabase.from("reservations").insert({
+        booking_id: bookingId,
+        name: form.name.trim(),
+        email: form.email.trim(),
+        phone: form.phone.trim() || null,
+        date: form.date,
+        time: form.time,
+        guests: parseInt(form.guests),
+        message: form.message.trim() || null,
+      });
+
+      if (dbError) {
+        console.error("DB error:", dbError);
+        toast.error("Failed to save reservation. Please try again.");
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Send confirmation email
+      const { error: emailError } = await supabase.functions.invoke("send-reservation-email", {
+        body: {
+          name: form.name.trim(),
+          email: form.email.trim(),
+          date: form.date,
+          time: form.time,
+          guests: form.guests,
+          bookingId,
+        },
+      });
+
+      if (emailError) {
+        console.error("Email error:", emailError);
+        // Still show confirmation even if email fails
+        toast.warning("Reservation saved! Email confirmation may be delayed.");
+      }
+
+      setConfirmation({
+        id: bookingId,
+        name: form.name,
+        date: form.date,
+        time: form.time,
+        guests: form.guests,
+      });
+      setForm({ name: "", email: "", phone: "", date: "", time: "", guests: "", message: "" });
+    } catch (err) {
+      console.error("Reservation error:", err);
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const formatDate = (dateStr: string) => {
@@ -70,6 +118,7 @@ const ReservationSection = () => {
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
               maxLength={100}
+              disabled={isSubmitting}
             />
             <input
               type="email"
@@ -78,6 +127,7 @@ const ReservationSection = () => {
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
               maxLength={255}
+              disabled={isSubmitting}
             />
             <input
               type="tel"
@@ -85,11 +135,13 @@ const ReservationSection = () => {
               placeholder="Phone Number"
               value={form.phone}
               onChange={(e) => setForm({ ...form, phone: e.target.value })}
+              disabled={isSubmitting}
             />
             <select
               className={inputClass}
               value={form.guests}
               onChange={(e) => setForm({ ...form, guests: e.target.value })}
+              disabled={isSubmitting}
             >
               <option value="">Number of Guests *</option>
               {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
@@ -101,12 +153,14 @@ const ReservationSection = () => {
               className={inputClass}
               value={form.date}
               onChange={(e) => setForm({ ...form, date: e.target.value })}
+              disabled={isSubmitting}
             />
             <input
               type="time"
               className={inputClass}
               value={form.time}
               onChange={(e) => setForm({ ...form, time: e.target.value })}
+              disabled={isSubmitting}
             />
           </div>
           <textarea
@@ -116,12 +170,18 @@ const ReservationSection = () => {
             value={form.message}
             onChange={(e) => setForm({ ...form, message: e.target.value })}
             maxLength={1000}
+            disabled={isSubmitting}
           />
           <button
             type="submit"
-            className="w-full py-3.5 rounded-lg bg-primary text-primary-foreground font-semibold flex items-center justify-center gap-2 hover:bg-primary/90 transition-all duration-300 hover:scale-[1.01]"
+            disabled={isSubmitting}
+            className="w-full py-3.5 rounded-lg bg-primary text-primary-foreground font-semibold flex items-center justify-center gap-2 hover:bg-primary/90 transition-all duration-300 hover:scale-[1.01] disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            <Send className="w-4 h-4" /> Send Reservation Request
+            {isSubmitting ? (
+              <><Loader2 className="w-4 h-4 animate-spin" /> Booking...</>
+            ) : (
+              <><Send className="w-4 h-4" /> Send Reservation Request</>
+            )}
           </button>
         </form>
       </div>
@@ -174,7 +234,7 @@ const ReservationSection = () => {
             </div>
 
             <p className="text-xs text-center text-muted-foreground mb-4">
-              A confirmation has been sent to your email. Please save your Booking ID for reference.
+              A confirmation email has been sent to your email address. Please save your Booking ID for reference.
             </p>
 
             <button
