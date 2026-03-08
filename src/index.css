@@ -96,7 +96,7 @@
     transform: translateY(-4px);
   }
   .gallery-item {
-    @apply rounded-xl overflow-hidden relative group cursor-pointer;
+    @apply rounded-xl overflow-hidden relative cursor-pointer;
   }
   .gallery-item img {
     @apply transition-transform duration-500;
