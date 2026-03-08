@@ -138,8 +138,8 @@ const ReservationSection = () => {
             </button>
 
             <div className="text-center mb-6">
-              <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
-                <CheckCircle2 className="w-9 h-9 text-green-600" />
+              <div className="w-16 h-16 rounded-full bg-accent flex items-center justify-center mx-auto mb-4">
+                <CheckCircle2 className="w-9 h-9 text-primary" />
               </div>
               <h3 className="font-heading text-2xl font-bold text-foreground">Table Reserved!</h3>
               <p className="text-muted-foreground text-sm mt-1">Your booking has been confirmed</p>
