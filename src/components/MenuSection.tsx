@@ -144,14 +144,16 @@ const categories: Record<string, MenuItem[]> = {
     { name: "Truffle Pasta", desc: "Hand-rolled linguine, parmesan cream, fresh truffle shavings", price: "₹299", image: menuSpecial, popular: true },
   ],
   "Chef's Specials": [
-    { name: "Matcha Latte", desc: "Ceremonial-grade Japanese matcha with oat milk & honey", price: "₹169", image: menuMatchaLatte, popular: true },
-    { name: "Loaded Nachos", desc: "Crispy tortilla chips with cheese, jalapeños, salsa & sour cream", price: "₹199", image: menuNachos, popular: true },
+    { name: "Chole Bhature", desc: "Spicy chickpea curry with fluffy fried bread, onion & chutney", price: "₹149", image: menuCholeBhature, popular: true },
+    { name: "Pav Bhaji", desc: "Buttery mashed veggie curry with toasted pav, onion & lemon", price: "₹139", image: menuPavBhaji, popular: true },
+    { name: "Masala Dosa", desc: "Crispy golden crepe with spiced potato, sambar & coconut chutney", price: "₹129", image: menuMasalaDosa, popular: true },
+    { name: "Raj Kachori Chaat", desc: "Crispy kachori with yogurt, chutneys, pomegranate & sev", price: "₹119", image: menuRajKachori },
+    { name: "Paneer Tikka Platter", desc: "Charred tandoori paneer skewers with peppers & mint chutney", price: "₹199", image: menuPaneerTikka, popular: true },
+    { name: "Loaded Nachos", desc: "Crispy tortilla chips with cheese, jalapeños, salsa & sour cream", price: "₹199", image: menuNachos },
+    { name: "Shakshuka", desc: "Poached eggs in spiced tomato sauce, served with crusty sourdough", price: "₹229", image: menuShakshuka },
     { name: "Truffle Parmesan Fries", desc: "Golden fries drizzled with truffle oil & parmesan shavings", price: "₹199", image: menuTruffleFries },
     { name: "Açaí Power Bowl", desc: "Açaí blend topped with granola, berries, coconut & chia seeds", price: "₹219", image: menuAcaiBowl },
-    { name: "Shakshuka", desc: "Poached eggs in spiced tomato sauce, served with crusty sourdough", price: "₹229", image: menuShakshuka, popular: true },
-    { name: "Brioche French Toast", desc: "Thick-cut brioche with berries, maple syrup & whipped cream", price: "₹229", image: menuFrenchToast },
-    { name: "Crispy Chicken Burger", desc: "Buttermilk fried chicken, coleslaw, pickles on a brioche bun", price: "₹269", image: menuBurger, popular: true },
-    { name: "Banoffee Pie", desc: "Biscuit base, banana, toffee, whipped cream & caramel drizzle", price: "₹219", image: menuBanoffeePie },
+    { name: "Crispy Chicken Burger", desc: "Buttermilk fried chicken, coleslaw, pickles on a brioche bun", price: "₹269", image: menuBurger },
   ],
 };
 
