@@ -19,19 +19,19 @@ type MenuItem = {
 
 const categories: Record<string, MenuItem[]> = {
   Coffee: [
-    { name: "Flat White", desc: "Velvety steamed milk over a double shot of espresso", price: "$4.50", image: menuCoffee, popular: true },
-    { name: "Iced Caramel Macchiato", desc: "Espresso layered with vanilla milk and caramel drizzle", price: "$5.50", image: menuIcedCoffee },
+    { name: "Flat White", desc: "Velvety steamed milk over a double shot of espresso", price: "₹375", image: menuCoffee, popular: true },
+    { name: "Iced Caramel Macchiato", desc: "Espresso layered with vanilla milk and caramel drizzle", price: "₹459", image: menuIcedCoffee },
   ],
   Snacks: [
-    { name: "Avocado Toast", desc: "Sourdough, smashed avocado, poached egg, microgreens", price: "$9.00", image: menuSnack, popular: true },
-    { name: "Blueberry Muffin", desc: "Freshly baked with organic blueberries and oat crumble", price: "$4.00", image: menuMuffin },
+    { name: "Avocado Toast", desc: "Sourdough, smashed avocado, poached egg, microgreens", price: "₹749", image: menuSnack, popular: true },
+    { name: "Blueberry Muffin", desc: "Freshly baked with organic blueberries and oat crumble", price: "₹329", image: menuMuffin },
   ],
   Desserts: [
-    { name: "Chocolate Lava Cake", desc: "Warm molten center with raspberry coulis and fresh berries", price: "$8.50", image: menuDessert, popular: true },
-    { name: "Classic Tiramisu", desc: "Layered mascarpone, espresso-soaked ladyfingers, cocoa", price: "$7.50", image: menuTiramisu },
+    { name: "Chocolate Lava Cake", desc: "Warm molten center with raspberry coulis and fresh berries", price: "₹699", image: menuDessert, popular: true },
+    { name: "Classic Tiramisu", desc: "Layered mascarpone, espresso-soaked ladyfingers, cocoa", price: "₹625", image: menuTiramisu },
   ],
   "Special Dishes": [
-    { name: "Truffle Pasta", desc: "Hand-rolled linguine, parmesan cream, fresh truffle shavings", price: "$14.00", image: menuSpecial, popular: true },
+    { name: "Truffle Pasta", desc: "Hand-rolled linguine, parmesan cream, fresh truffle shavings", price: "₹1,169", image: menuSpecial, popular: true },
   ],
 };
 
