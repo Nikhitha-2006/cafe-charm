@@ -100,6 +100,7 @@ const categoryKeys = Object.keys(categories);
 
 const MenuSection = () => {
   const [active, setActive] = useState(categoryKeys[0]);
+  const items = categories[active] || categories[categoryKeys[0]] || [];
 
   return (
     <section id="menu" className="section-padding bg-secondary/50">
@@ -129,7 +130,7 @@ const MenuSection = () => {
 
         {/* Menu grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {categories[active].map((item) => (
+          {items.map((item) => (
             <div key={item.name} className="menu-card">
               <div className="relative h-52 overflow-hidden">
                 <img
