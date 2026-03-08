@@ -60,6 +60,15 @@ import menuDalMakhani from "@/assets/menu-dalmakhani.jpg";
 import menuChickenBiryani from "@/assets/menu-chickenbiryani.jpg";
 import menuVegBiryani from "@/assets/menu-vegbiryani.jpg";
 
+// Chef's Specials
+import menuNachos from "@/assets/menu-nachos.jpg";
+import menuShakshuka from "@/assets/menu-shakshuka.jpg";
+import menuTruffleFries from "@/assets/menu-trufflefries.jpg";
+import menuAcaiBowl from "@/assets/menu-acaibowl.jpg";
+import menuBurger from "@/assets/menu-burger.jpg";
+import menuFrenchToast from "@/assets/menu-frenchtoast.jpg";
+import menuMatchaLatte from "@/assets/menu-matchalatte.jpg";
+import menuBanoffeePie from "@/assets/menu-banoffeepie.jpg";
 type MenuItem = {
   name: string;
   desc: string;
