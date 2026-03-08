@@ -22,7 +22,7 @@ const GallerySection = () => {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto auto-rows-[200px] md:auto-rows-[220px]">
           {images.map((img) => (
-            <div key={img.alt} className={`gallery-item ${img.span}`}>
+            <div key={img.alt} className={`gallery-item group ${img.span}`}>
               <img
                 src={img.src}
                 alt={img.alt}
