@@ -100,6 +100,7 @@ const categoryKeys = Object.keys(categories);
 
 const MenuSection = () => {
   const [active, setActive] = useState(categoryKeys[0]);
+  const items = categories[active] || categories[categoryKeys[0]] || [];
 
   return (
     <section id="menu" className="section-padding bg-secondary/50">
